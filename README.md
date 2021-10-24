@@ -20,6 +20,11 @@ $ mvn spring-boot:run
 The application will be working on: http://localhost:8080/actuator
 
 ### Prometheus and Grafana
+Add permissions to *grafana* folder:
+```shell
+$ chmod 777 grafana
+```
+
 Run Prometheus and Grafana with Docker:
 ```shell
 $ docker-compose up
