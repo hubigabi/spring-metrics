@@ -17,7 +17,12 @@ Run the application using Maven:
 ```shell
 $ mvn spring-boot:run
 ```
-The application will be working on: http://localhost:8080/actuator
+The application will be working on: http://localhost:8080/actuator  
+
+Generate application traffic:
+```shell
+$ while sleep 5; do curl http://localhost:8080/actuator; done
+```
 
 ### Prometheus and Grafana
 Add permissions to *grafana* folder:
