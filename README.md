@@ -21,7 +21,7 @@ The application will be working on: http://localhost:8080/actuator
 
 Generate application traffic:
 ```shell
-$ while sleep 5; do curl http://localhost:8080/actuator; done
+$ while sleep 1; do curl http://localhost:8080/actuator; done
 ```
 
 ### Prometheus and Grafana
@@ -30,9 +30,10 @@ Add permissions to *grafana* folder:
 $ chmod 777 grafana
 ```
 
-Run Prometheus and Grafana with Docker:
+Run Prometheus, Alertmanager and Grafana with Docker:
 ```shell
 $ docker-compose up
 ```
 Prometheus will be working on: http://localhost:9090  
+Alertmanager will be working on: http://localhost:9093  
 Grafana will be working on: http://localhost:3000
