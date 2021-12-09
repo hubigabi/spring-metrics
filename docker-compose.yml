@@ -2,13 +2,13 @@ version: "3.8"
 services:
   prometheus:
     image: prom/prometheus
-    container_name: prometheus  
+    container_name: prometheus
     #ports:
     # - "9090:9090"
     volumes:
       - $PWD/prometheus:/etc/prometheus
     network_mode: "host"
-    
+
   alertmanager:
     image: prom/alertmanager
     container_name: alertmanager
@@ -19,10 +19,10 @@ services:
     command:
       - '--config.file=/etc/alertmanager/alertmanager_mail.yml'
     network_mode: "host"
-    
+
   grafana:
     image: grafana/grafana
-    container_name: grafana  
+    container_name: grafana
     #ports:
     #  - "3000:3000"
     volumes:
@@ -30,3 +30,54 @@ services:
     network_mode: "host"
     depends_on:
       - prometheus
+
+  elasticsearch:
+    image: elasticsearch:7.14.2
+    container_name: elasticsearch
+    hostname: elasticsearch
+    environment:
+        - "discovery.type=single-node"
+    ports:
+        - 9200:9200
+        - 9300:9300
+    deploy:
+      resources:
+        limits:
+          cpus: '0.30'
+          memory: 1500M
+        
+  kibana:
+    image: kibana:7.14.2
+    container_name: kibana
+    hostname: kibana
+    ports:
+        - 5601:5601
+    links:
+        - elasticsearch:elasticsearch
+    depends_on:
+      - elasticsearch
+    deploy:
+      resources:
+        limits:
+          cpus: '0.30'
+          memory: 1500M
+      
+  logstash:
+    image: logstash:7.14.2
+    container_name: logstash
+    hostname: logstash
+    ports:
+        - 9600:9600
+        - 8089:8089
+        - 5000:5000
+    volumes:
+      - $PWD/logstash:/usr/share/logstash/pipeline/
+    links:
+        - elasticsearch:elasticsearch
+    depends_on:
+      - elasticsearch
+    deploy:
+      resources:
+        limits:
+          cpus: '0.20'
+          memory: 1000M
