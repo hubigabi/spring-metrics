@@ -24,16 +24,18 @@ Generate application traffic:
 $ while sleep 1; do curl http://localhost:8080/actuator; done
 ```
 
-### Prometheus and Grafana
+### Run monitoring tools
 Add permissions to *grafana* folder:
 ```shell
 $ chmod 777 grafana
 ```
 
-Run Prometheus, Alertmanager and Grafana with Docker:
+Run monitoring tools with Docker:
 ```shell
 $ docker-compose up
 ```
-Prometheus will be working on: http://localhost:9090  
-Alertmanager will be working on: http://localhost:9093  
-Grafana will be working on: http://localhost:3000
+**Prometheus** will be working on: http://localhost:9090  
+**Alertmanager** will be working on: http://localhost:9093  
+**Grafana** will be working on: http://localhost:3000  
+**Elasticsearch** will be working on: http://localhost:9200  
+**Kibana** will be working on: http://localhost:5601  

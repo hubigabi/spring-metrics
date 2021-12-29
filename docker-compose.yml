@@ -37,14 +37,22 @@ services:
     hostname: elasticsearch
     environment:
         - "discovery.type=single-node"
+        - "ES_JAVA_OPTS=-Xms1500m -Xmx1500m"
+        - bootstrap.memory_lock=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     ports:
         - 9200:9200
         - 9300:9300
-    deploy:
-      resources:
-        limits:
-          cpus: '0.30'
-          memory: 1500M
+    volumes:
+        - $PWD/elasticsearch:/usr/share/elasticsearch/data
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.30'
+    #       memory: 1500M
         
   kibana:
     image: kibana:7.14.2
@@ -59,8 +67,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.30'
-          memory: 1500M
+          cpus: '0.20'
+          memory: 1000M
       
   logstash:
     image: logstash:7.14.2
@@ -79,5 +87,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.20'
-          memory: 1000M
+          cpus: '0.15'
+          memory: 600M
